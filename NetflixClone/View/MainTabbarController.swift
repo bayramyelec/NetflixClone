@@ -16,9 +16,9 @@ class MainTabbarController: UITabBarController {
     
     private func setupTabBar() {
         let vc1 = HomeVC()
-        let vc2 = NewVC()
-        let vc3 = SearchVC()
-        let vc4 = DownloadVC()
+        let vc2 = UINavigationController(rootViewController: NewVC())
+        let vc3 = UINavigationController(rootViewController: SearchVC())
+        let vc4 = UINavigationController(rootViewController: DownloadVC())
         
         vc1.tabBarItem.image = UIImage(systemName: "house.fill")
         vc2.tabBarItem.image = UIImage(systemName: "play.square.stack.fill")
