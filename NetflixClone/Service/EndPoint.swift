@@ -68,8 +68,8 @@ extension EndPoint: EndPointProtocol {
     }
     
     func request() -> URLRequest {
-        guard let apiUrl = URLComponents(string: mainURL()) else { fatalError("Invalid URL") }
-        var urlRequest = URLRequest(url: apiUrl.url!)
+        guard let url = URL(string: mainURL()) else { fatalError("Invalid URL") }
+        var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
         return urlRequest
     }
