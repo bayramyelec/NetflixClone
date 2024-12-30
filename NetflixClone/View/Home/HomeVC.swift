@@ -22,7 +22,9 @@ class HomeVC: UIViewController {
         
         let layout = UICollectionViewCompositionalLayout { sectionIndex, _ in
             switch sectionIndex {
-            case 0: return CompositionalLayoutHelper.makeCompositionalLayout()
+            case 0: return CompositionalLayoutHelper.popularCompositionalLayout()
+            case 1: return CompositionalLayoutHelper.topRatedCompositionalLayout()
+            case 2: return CompositionalLayoutHelper.popularCompositionalLayout()
             default: return nil
             }
         }
@@ -37,7 +39,19 @@ class HomeVC: UIViewController {
         super.viewDidLoad()
         setup()
         viewModel.fetchPopularMovies()
+        viewModel.fetchTopRatedMovies()
+        viewModel.fetchUpcomingMovies()
         viewModel.reloadPopular = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        viewModel.reloadTopRated = { [weak self] in
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
+        viewModel.reloadUpcoming = { [weak self] in
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
@@ -131,34 +145,69 @@ extension HomeVC {
         view.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: HomeCollectionViewCell.identifier)
+        collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(headerView.snp.bottom)
             make.left.right.equalTo(view.safeAreaLayoutGuide)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
         }
+        collectionView.register(TopRatedCollectionViewCell.self, forCellWithReuseIdentifier: TopRatedCollectionViewCell.identifier)
+        collectionView.register(UpComingCollectionViewCell.self, forCellWithReuseIdentifier: UpComingCollectionViewCell.identifier)
+        collectionView.register(HeaderView.self, forSupplementaryViewOfKind: HeaderView.kind, withReuseIdentifier: HeaderView.identifier)
     }
 }
 
 extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return 3
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
             return viewModel.popularList.count
+        } else if section == 1 {
+            return viewModel.topRatedList.count
+        } else if section == 2 {
+            return viewModel.upcomingList.count
         }
         return 10
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCollectionViewCell.identifier, for: indexPath) as! HomeCollectionViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
             let item = viewModel.popularList[indexPath.row]
             cell.titleLabel.text = item.title
             cell.loadImage(url: item.posterPath)
             return cell
+        } else if indexPath.section == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopRatedCollectionViewCell.identifier, for: indexPath) as! TopRatedCollectionViewCell
+            let item = viewModel.topRatedList[indexPath.row]
+            cell.loadImage(url: item.posterPath)
+            return cell
+        } else if indexPath.section == 2 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UpComingCollectionViewCell.identifier, for: indexPath) as! UpComingCollectionViewCell
+            let item = viewModel.upcomingList[indexPath.row]
+            cell.loadImage(url: item.posterPath)
+            return cell
         }
-        return HomeCollectionViewCell()
+        return UICollectionViewCell()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if indexPath.section == 0 {
+            let supView = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderView.kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
+            supView.configure(with: "Popular")
+            return supView
+        } else if indexPath.section == 1 {
+            let supView = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderView.kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
+            supView.configure(with: "Top Rated")
+            return supView
+        } else if indexPath.section == 2 {
+            let supView = collectionView.dequeueReusableSupplementaryView(ofKind: HeaderView.kind, withReuseIdentifier: HeaderView.identifier, for: indexPath) as! HeaderView
+            supView.configure(with: "Up Coming")
+            return supView
+        }
+        return HeaderView()
+    }
+    
 }

@@ -32,7 +32,6 @@ enum EndPoint {
 }
 
 extension EndPoint: EndPointProtocol {
-    
     var baseURL: String {
         return "https://api.themoviedb.org/3/movie/"
     }

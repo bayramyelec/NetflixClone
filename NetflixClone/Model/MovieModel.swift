@@ -52,4 +52,12 @@ enum OriginalLanguage: String, Codable {
     case en = "en"
     case es = "es"
     case fr = "fr"
+    case ja = "ja"
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let value = try container.decode(String.self)
+        self = OriginalLanguage(rawValue: value) ?? .en
+    }
 }
+

@@ -37,6 +37,7 @@ class NetworkManager {
         task.resume()
     }
     
+    
     func getPopular(completion: @escaping (Result<MovieModel, Error>) -> Void){
         let endPoint = EndPoint.getPopular
         request(endPoint) { (result:Result<MovieModel, Error>) in
@@ -46,7 +47,9 @@ class NetworkManager {
     
     func getTopRated(completion: @escaping (Result<MovieModel, Error>) -> Void){
         let endPoint = EndPoint.getTopRated
-        request(endPoint, completion: completion)
+        request(endPoint) { (result:Result<MovieModel, Error>) in
+            completion(result)
+        }
     }
     
     func getUpcoming(completion: @escaping (Result<MovieModel, Error>) -> Void){
