@@ -8,8 +8,17 @@
 import UIKit
 
 class CompositionalLayoutHelper {
+    
+    static func headerViewLayout() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(250))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let section = NSCollectionLayoutSection(group: group)
+        return section
+    }
+  
     static func popularCompositionalLayout() -> NSCollectionLayoutSection {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
@@ -20,7 +29,7 @@ class CompositionalLayoutHelper {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
-            elementKind: HeaderView.kind,
+            elementKind: TitleView.kind,
             alignment: .topLeading
         )
         section.boundarySupplementaryItems = [header]
@@ -38,7 +47,7 @@ class CompositionalLayoutHelper {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
-            elementKind: HeaderView.kind,
+            elementKind: TitleView.kind,
             alignment: .topLeading
         )
         section.boundarySupplementaryItems = [header]
@@ -56,7 +65,7 @@ class CompositionalLayoutHelper {
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
-            elementKind: HeaderView.kind,
+            elementKind: TitleView.kind,
             alignment: .topLeading
         )
         section.boundarySupplementaryItems = [header]

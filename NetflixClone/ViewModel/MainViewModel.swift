@@ -5,9 +5,11 @@
 //  Created by Bayram Yeleç on 29.12.2024.
 //
 
-import Foundation
+import UIKit
 
 class MainViewModel {
+    
+    var headerList: [UIImage?] = [UIImage(named: "header")]
     
     var popularList: [MovieResult] = [] {
         didSet {
@@ -47,7 +49,6 @@ class MainViewModel {
         NetworkManager.shared.getTopRated { [weak self] result in
             switch result {
             case .success(let movieModel):
-                print("Top rated movies: \(movieModel.results)")  // Burada gelen veriyi yazdırın
                 self?.topRatedList = movieModel.results
                 self?.reloadTopRated?()
             case .failure(let error):
@@ -55,7 +56,7 @@ class MainViewModel {
             }
         }
     }
-
+    
     func fetchUpcomingMovies() {
         NetworkManager.shared.getUpcoming { [weak self] result in
             switch result {

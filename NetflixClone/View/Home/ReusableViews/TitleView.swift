@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class HeaderView: UICollectionReusableView {
+class TitleView: UICollectionReusableView {
     
     static let identifier = "HeaderView"
     static let kind = "Header"
