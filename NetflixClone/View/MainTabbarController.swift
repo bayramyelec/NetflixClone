@@ -35,7 +35,7 @@ class MainTabbarController: UITabBarController {
         UITabBar.appearance().scrollEdgeAppearance = appearance
         
         
-        setViewControllers([vc1, vc2, vc3, vc4], animated: true)
+        setViewControllers([vc1, vc3, vc2, vc4], animated: true)
     }
     
 }

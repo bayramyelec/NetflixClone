@@ -17,7 +17,7 @@ class HomeVC: UIViewController {
             case 0: return CompositionalLayoutHelper.headerViewLayout()
             case 1: return CompositionalLayoutHelper.popularCompositionalLayout()
             case 2: return CompositionalLayoutHelper.topRatedCompositionalLayout()
-            case 3: return CompositionalLayoutHelper.popularCompositionalLayout()
+            case 3: return CompositionalLayoutHelper.upComingCompositionalLayout()
             default: return nil
             }
         }
@@ -51,8 +51,8 @@ extension HomeVC {
         collectionView.register(PopularCollectionViewCell.self, forCellWithReuseIdentifier: PopularCollectionViewCell.identifier)
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide)
-            make.left.right.equalTo(view.safeAreaLayoutGuide)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            make.left.right.equalToSuperview()
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(10)
         }
         collectionView.register(TopRatedCollectionViewCell.self, forCellWithReuseIdentifier: TopRatedCollectionViewCell.identifier)
         collectionView.register(UpComingCollectionViewCell.self, forCellWithReuseIdentifier: UpComingCollectionViewCell.identifier)

@@ -6,9 +6,12 @@
 //
 
 import UIKit
+import SnapKit
 
 class SearchVC: UIViewController {
-
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -21,4 +24,5 @@ extension SearchVC {
     func setupUI(){
         view.backgroundColor = .black
     }
+    
 }
