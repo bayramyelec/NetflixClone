@@ -25,10 +25,11 @@ struct MovieResult: Codable {
     let genreIDS: [Int]
     let id: Int
     let originalLanguage: OriginalLanguage
-    let originalTitle, overview: String
+    let originalTitle, overview: String?
     let popularity: Double
-    let posterPath, releaseDate, title: String
-    let video: Bool
+    let posterPath, title: String?
+    let releaseDate: String?
+    let video: Bool?
     let voteAverage: Double
     let voteCount: Int
 

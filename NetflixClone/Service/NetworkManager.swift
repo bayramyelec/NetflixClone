@@ -57,5 +57,27 @@ class NetworkManager {
         request(endPoint, completion: completion)
     }
     
+    func fetchTrending(completion: @escaping (Result<MovieModel, Error>) -> Void){
+        guard let url = URL(string: "https://api.themoviedb.org/3/trending/movie/day?api_key=a2b824df372550b39cb5be766e3ec3a5") else {return}
+        URLSession.shared.dataTask(with: url) { data, response , error in
+            if let error = error {
+                print("Error fetching trending movies: \(error)")
+                completion(.failure(error))
+                return
+            }
+            guard let data = data else {
+                print("Error fetching trending movies: No data")
+                completion(.failure(error ?? URLError(.badServerResponse)))
+                return
+            }
+            do {
+                let movieModel = try JSONDecoder().decode(MovieModel.self, from: data)
+                completion(.success(movieModel))
+            } catch {
+                print("Error decoding trending movies: \(error)")
+            }
+        }.resume()
+    }
+    
 }
 

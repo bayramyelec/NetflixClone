@@ -29,9 +29,23 @@ class MainViewModel {
         }
     }
     
+    var trendingList: [MovieResult] = [] {
+        didSet {
+            reloadTrending?()
+        }
+    }
+    
+    var downloadList: [DownloadModel] = [] {
+        didSet {
+            reloadDownloaded?()
+        }
+    }
+    
     var reloadPopular: (() -> Void)?
     var reloadTopRated: (() -> Void)?
     var reloadUpcoming: (() -> Void)?
+    var reloadTrending: (() -> Void)?
+    var reloadDownloaded: (() -> Void)?
     
     func fetchPopularMovies() {
         NetworkManager.shared.getPopular { [weak self] result in
@@ -67,6 +81,35 @@ class MainViewModel {
                 print("Error fetching upcoming movies: \(error)")
             }
         }
+    }
+    
+    func fetchTrendingMovies() {
+        NetworkManager.shared.fetchTrending { [weak self] result in
+            switch result {
+            case .success(let movieModel):
+                self?.trendingList = movieModel.results
+                self?.reloadTrending?()
+            case .failure(let error):
+                print("Error fetching trending movies: \(error)")
+            }
+        }
+    }
+    
+    func addMovieToDownloadList(image: String, title: String) {
+        let item = DownloadModel(image: image, title: title)
+        if !downloadList.contains(where: { $0.title == item.title }) {
+            downloadList.append(item)
+            print("Added: \(item.title)")
+            reloadDownloaded?()
+            print(downloadList.count)
+        } else {
+            print("Already exists: \(item.title)")
+        }
+    }
+    
+    func removeMovieFromDownloadList(title: String) {
+        downloadList.removeAll(where: { $0.title == title })
+        reloadDownloaded?()
     }
     
 }

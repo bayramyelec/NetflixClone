@@ -7,6 +7,8 @@
 
 // https://api.themoviedb.org/3/movie/popular?api_key=a2b824df372550b39cb5be766e3ec3a5
 
+// https://api.themoviedb.org/3/trending/all/day?api_key=a2b824df372550b39cb5be766e3ec3a5
+
 import Foundation
 
 protocol EndPointProtocol {

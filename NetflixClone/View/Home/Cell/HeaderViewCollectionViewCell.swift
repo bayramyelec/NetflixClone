@@ -43,7 +43,7 @@ class HeaderViewCollectionViewCell: UICollectionViewCell {
         headerView.contentMode = .scaleAspectFill
         headerView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
-            make.height.equalTo(250)
+            make.height.equalTo(300)
         }
         
         headerView.addSubview(playButton)

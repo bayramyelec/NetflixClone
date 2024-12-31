@@ -106,17 +106,17 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PopularCollectionViewCell.identifier, for: indexPath) as! PopularCollectionViewCell
             let item = viewModel.popularList[indexPath.row]
             cell.titleLabel.text = item.title
-            cell.loadImage(url: item.posterPath)
+            cell.loadImage(url: item.posterPath ?? "")
             return cell
         } else if indexPath.section == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopRatedCollectionViewCell.identifier, for: indexPath) as! TopRatedCollectionViewCell
             let item = viewModel.topRatedList[indexPath.row]
-            cell.loadImage(url: item.posterPath)
+            cell.loadImage(url: item.posterPath ?? "")
             return cell
         } else if indexPath.section == 3 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UpComingCollectionViewCell.identifier, for: indexPath) as! UpComingCollectionViewCell
             let item = viewModel.upcomingList[indexPath.row]
-            cell.loadImage(url: item.posterPath)
+            cell.loadImage(url: item.posterPath ?? "")
             return cell
         }
         return UICollectionViewCell()
@@ -126,7 +126,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource{
         if indexPath.section == 1 {
             let supView = collectionView.dequeueReusableSupplementaryView(ofKind: TitleView.kind, withReuseIdentifier: TitleView.identifier, for: indexPath) as! TitleView
             supView.configure(with: "Popular")
-            
             return supView
         } else if indexPath.section == 2 {
             let supView = collectionView.dequeueReusableSupplementaryView(ofKind: TitleView.kind, withReuseIdentifier: TitleView.identifier, for: indexPath) as! TitleView
