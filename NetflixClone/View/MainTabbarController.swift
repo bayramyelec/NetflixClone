@@ -18,6 +18,7 @@ class MainTabbarController: UITabBarController {
     
     private func setupTabBar() {
         let vc1 = HomeVC()
+        vc1.viewModel = viewModel
         let vc3 = SearchVC()
         vc3.viewModel = viewModel
         let vc4 = DownloadVC()

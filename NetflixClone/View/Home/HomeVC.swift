@@ -122,6 +122,41 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource{
         return UICollectionViewCell()
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            if indexPath.section == 1 {
+                let downloadAction = UIAction(title: "Download", image: UIImage(systemName: "arrow.down.to.line")) { _ in
+                    print("Download tapped for item \(indexPath.row)")
+                    
+                    let item = self.viewModel.popularList[indexPath.row]
+                    self.viewModel.addMovieToDownloadList(image: item.posterPath ?? "", title: item.title ?? "")
+                }
+                return UIMenu(title: "", children: [downloadAction])
+            } else if indexPath.section == 2 {
+                let downloadAction = UIAction(title: "Download", image: UIImage(systemName: "arrow.down.to.line")) { _ in
+                    print("Download tapped for item \(indexPath.row)")
+                    
+                    let item = self.viewModel.topRatedList[indexPath.row]
+                    self.viewModel.addMovieToDownloadList(image: item.posterPath ?? "", title: item.title ?? "")
+                }
+                return UIMenu(title: "", children: [downloadAction])
+            } else if indexPath.section == 3 {
+                let downloadAction = UIAction(title: "Download", image: UIImage(systemName: "arrow.down.to.line")) { _ in
+                    print("Download tapped for item \(indexPath.row)")
+                    
+                    let item = self.viewModel.popularList[indexPath.row]
+                    self.viewModel.addMovieToDownloadList(image: item.posterPath ?? "", title: item.title ?? "")
+                }
+                return UIMenu(title: "", children: [downloadAction])
+            }
+            return UIMenu()
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if indexPath.section == 1 {
             let supView = collectionView.dequeueReusableSupplementaryView(ofKind: TitleView.kind, withReuseIdentifier: TitleView.identifier, for: indexPath) as! TitleView
